@@ -2,11 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 
 // 폰트 import 
-import ExtraLight from "./font/MaruBuri-ExtraLight.ttf";
-import Light from "./font/MaruBuri-Light.ttf";
-import Regular from "./font/MaruBuri-Regular.ttf";
-import SemiBold from "./font/MaruBuri-SemiBold.ttf";
-import Bold from "./font/MaruBuri-Bold.ttf";
+
 
 const GlobalStyles = createGlobalStyle`
     ${reset}
