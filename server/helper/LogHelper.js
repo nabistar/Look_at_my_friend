@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const {join, resolve} = require('path');
 const fs = require('fs');
 
-const configFileName = process.env.NODE_ENV !== 'production' ? '.env.zara.development' : '.env.zara.production';
+const configFileName = process.env.NODE_ENV !== 'production' ? '.env.server.development' : '.env.server.production';
 const configPath = join(resolve(), configFileName);
 console.log(configPath);
 

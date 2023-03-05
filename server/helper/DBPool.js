@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const mysql = require('mysql2/promise');
 const logger = require('./LogHelper');
 
-dotenv.config({path: join(resolve(), ".env.zara.development")});
+dotenv.config({path: join(resolve(), ".env.server.development")});
 
 class DBPool {
 	static #currnt = null;
