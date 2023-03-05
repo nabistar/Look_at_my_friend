@@ -23,7 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # KEY
-.env
+.env.server.development
+.env.server.production
 
 # Logs
 logs
