@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="LetterMapper">
+	<select id="selectList">
+		SELECT file_path FROM letter
+
+		ORDER BY id DESC
+		<if test="listCount != 0">
+			LIMIT ${offset}, ${listCount}
+		</if>
+	</select>
+
+	<select id="selectItem">
+		SELECT file_path, CONVERT(content USING utf8) AS content, password FROM letter WHERE id=#{id}
+	</select>
+
+	<insert id="insertItem">
+		INSERT INTO letter (file_path, content, password) VALUES (#{file_path}, #{content}, #{password})
+	</insert>
+
+	<delete id="deleteItem">
+		DELETE FROM letter WHERE id=#{id}
+	</delete>
+
+	<select id="selectCount">
+		SELECT COUNT(*) AS cnt FROM letter
+	</select>
+</mapper>

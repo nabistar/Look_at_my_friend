@@ -28,3 +28,4 @@ logs
 _files
 .env
 .env.*
+dist
