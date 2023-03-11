@@ -12,7 +12,7 @@
 	</select>
 
 	<select id="selectItem">
-		SELECT file_path, CONVERT(content USING utf8) AS content, password FROM letter WHERE id=#{id}
+		SELECT id, file_path, CONVERT(content USING utf8) AS content, password FROM letter WHERE id=#{id}
 	</select>
 
 	<insert id="insertItem">

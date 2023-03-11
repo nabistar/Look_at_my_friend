@@ -1,6 +1,7 @@
 {
   "name": "myfriend",
   "version": "0.1.0",
+  "proxy": "http://localhost:3001",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
@@ -57,7 +58,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build | tsc",
-    "dev": "nodemon server/app.js | react-scripts start",
+    "dev": "react-scripts start | nodemon dist/server/app.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

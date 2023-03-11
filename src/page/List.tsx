@@ -49,7 +49,7 @@ const List = memo(() => {
         <Container>
             <div className="list">
                 <div>
-                    <NavLink to="/main/view">
+                    <NavLink to="/main/view/1">
                         <img src={test} alt="이미지" />
                     </NavLink>
                 </div>

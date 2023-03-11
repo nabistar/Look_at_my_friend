@@ -2,6 +2,9 @@ import React, { memo } from "react";
 import styled from "styled-components";
 import { NavLink, Routes, Route } from "react-router-dom";
 
+// 미디어 쿼리
+import mq from "../MediaQuery";
+
 // img
 import back from "../assets/img/back.png";
 import pen from "../assets/img/pen.png";
@@ -48,6 +51,12 @@ const Container = styled.div`
 		}
     }
 
+	${mq.maxWidth('sm')`
+		.box {
+			width: 75%;
+		}
+	`}
+
 `;
 
 const main = memo(() => {
@@ -64,7 +73,7 @@ const main = memo(() => {
                 </nav>
                 <div className="img">
                     <Routes>
-                        <Route path="view" element={<View />} />
+                        <Route path="view/:id" element={<View />} />
 						<Route path="list" element={<List />} />
                         <Route path="write" element={<Write />} />
                     </Routes>

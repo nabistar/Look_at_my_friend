@@ -147,7 +147,7 @@ class FileHelper {
 			const thumbname = thumb_options.prefix + filename + thumb_options.suffix + extname(basename);
 
 			if(!file.hasOwnProperty(thumbnail)) {
-				file.thumnail = {};
+				file.thumbnail = {};
 			}
 
 			const key = v + "w";

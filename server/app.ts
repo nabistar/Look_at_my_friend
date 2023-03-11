@@ -20,6 +20,8 @@ import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 import MySQLStore from "express-mysql-session";
 
+import letter from "./controller/LetterController";
+
 interface custom extends Response {
 	sendResult?: Function,
 	sendError?: Function
@@ -133,7 +135,7 @@ const router = express.Router();
 app.use("/", router);
 
 // 각 url별 백엔드 기능 정의
-
+app.use("/", letter);
 
 // 에러 객체를 호출했을 때 동작할 처리. route처리의 맨 마지막에 위치해야함.
 app.use((err: Error, req: Request, res: custom, next: NextFunction) => {
