@@ -61,6 +61,19 @@ const Container = styled.div`
         }
     }
 
+	.delete {
+		button {
+			width: 100px;
+			height: 50px;
+			border: none;
+			outline: none;
+
+			&:hover {
+				background-color: #ff8800;
+			}
+		}
+	}
+
     ${mq.maxWidth("lg")`
 			.contentImg {
 				width: 100%;
@@ -68,6 +81,13 @@ const Container = styled.div`
 
 			.content {
 				width: 100%;
+				margin-top: 20px;
+			}
+
+			.delete {
+				button {
+					margin-top: 20px;
+				}
 			}
 		`}
 
@@ -93,6 +113,9 @@ const view = memo(() => {
             <div className="content">
                 <p>어쩌고저쩌고 자랑하는 주접글</p>
             </div>
+			<div className="delete">
+				<button type="button">삭제하기</button>
+			</div>
         </Container>
     );
 });

@@ -79,6 +79,7 @@ class LetterService {
 	async addItem(params: params) {
         let dbcon = null;
         let data = null;
+		console.log(params);
 
         try {
             dbcon = await DBPool.getConnection();
