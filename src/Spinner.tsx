@@ -11,7 +11,7 @@ interface spinner {
 	wrapperStyle?: any;
 }
 
-const Spinner = memo(({visible=false, width=100, height=100, color='#4fa94d', secondaryColor, wrapperStyle={
+const Spinner = memo(({visible=false, width=100, height=100, color='#ff8800', secondaryColor, wrapperStyle={
 	position: 'fixed',
 	zIndex: 9999,
 	top: '50%',

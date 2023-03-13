@@ -1,8 +1,15 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useCallback } from "react";
 import styled from "styled-components";
+import { useParams, useNavigate } from "react-router-dom";
 
-// img
-import test from "../assets/img/test.png";
+// 슬라이스
+import { getItem, DeleteItem } from "../Slice/FileSlice";
+
+// 커스텀 훅
+import { useAppDispatch, useAppSelector } from "../Hook";
+
+// 로딩바
+import Spinner from "../Spinner";
 
 // 미디어쿼리
 import mq from "../MediaQuery";
@@ -10,38 +17,14 @@ import mq from "../MediaQuery";
 const Container = styled.div`
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-    overflow-y: auto;
 
-    &::-webkit-scrollbar {
-        width: 10px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background-color: #eadac8;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: #ff8800;
-    }
-
-    .contentImg {
-        width: 49%;
-        img {
-            width: 100%;
-            height: 500px;
-        }
-    }
-
-    .content {
-        width: 49%;
-        height: 500px;
-        background-color: rgba(255, 255, 255, 0.5);
-        padding: 20px;
-        box-sizing: border-box;
+    .contentBox {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-evenly;
         overflow-y: auto;
 
         &::-webkit-scrollbar {
@@ -56,66 +39,152 @@ const Container = styled.div`
             background-color: #ff8800;
         }
 
-        p {
-            text-align: left;
+        .contentImg {
+            width: 49%;
+            img {
+                width: 100%;
+                height: 500px;
+            }
+        }
+
+        .content {
+            width: 49%;
+            height: 500px;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+
+            &::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: #eadac8;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: #ff8800;
+            }
+
+            p {
+                text-align: left;
+            }
+        }
+
+        .delete {
+            button {
+                width: 100px;
+                height: 50px;
+                border: none;
+                outline: none;
+
+                &:hover {
+                    background-color: #ff8800;
+                }
+            }
         }
     }
 
-	.delete {
-		button {
-			width: 100px;
-			height: 50px;
-			border: none;
-			outline: none;
+	.error {
+		width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+		justify-content: center;
 
-			&:hover {
-				background-color: #ff8800;
-			}
+		p {
+			width: 500px;
+			height: 400px;
+			text-align: center;
+			font-weight: bold;
+			background-color: rgba(255, 255, 255, 0.7);
+			padding-top: 190px;
+			box-sizing: border-box;
 		}
 	}
 
     ${mq.maxWidth("lg")`
-			.contentImg {
-				width: 100%;
-			}
+			.contentBox {
+				.contentImg {
+					width: 100%;
+				}
 
-			.content {
-				width: 100%;
-				margin-top: 20px;
-			}
-
-			.delete {
-				button {
+				.content {
+					width: 100%;
 					margin-top: 20px;
+				}
+
+				.delete {
+					button {
+						margin-top: 20px;
+					}
 				}
 			}
 		`}
 
     ${mq.maxWidth("sm")`
-			.contentImg {
-				img {
+			.contentBox {
+				.contentImg {
+					img {
+						height: 400px;
+					}
+				}
+
+				.content {
 					height: 400px;
 				}
-			}
-
-			.content {
-				height: 400px;
 			}
 		`}
 `;
 
 const view = memo(() => {
+    const { id } = useParams();
+    const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+    const { data, loading } = useAppSelector((state) => state.FileSlice);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(getItem({ id: id }));
+        }
+    }, []);
+
+    const deleteBtn = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		e.preventDefault();
+		const password = window.prompt('비밀번호를 입력해주세요.', "");
+		if (data && password == data.data.password) {
+			if(window.confirm("정말 삭제하시겠습니까?")) {
+				dispatch(DeleteItem({id: data.data.id})).then((result) => {
+					navigate("/main/list");
+				});
+			}
+		} else {
+			window.alert("비밀번호가 틀렸습니다.");
+		}
+	}, []);
+
     return (
         <Container>
-            <div className="contentImg">
-                <img src={test} alt="img" />
-            </div>
-            <div className="content">
-                <p>어쩌고저쩌고 자랑하는 주접글</p>
-            </div>
-			<div className="delete">
-				<button type="button">삭제하기</button>
-			</div>
+            <Spinner visible={loading} />
+            {data && data.data.id ? (
+                <div className="contentBox">
+                    <div className="contentImg">
+                        <img src={data.data.file_path} alt="img" />
+                    </div>
+                    <div className="content">
+                        <p>{data.data.content}</p>
+                    </div>
+                    <div className="delete">
+                        <button type="button" onClick={deleteBtn}>삭제하기</button>
+                    </div>
+                </div>
+            ) : (
+                <div className="error">
+					<p>데이터가 없습니다.</p>
+				</div>
+            )}
         </Container>
     );
 });
