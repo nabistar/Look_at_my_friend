@@ -18,6 +18,7 @@ const Container = styled.div`
     width: 100%;
     height: 100%;
 	overflow-y: auto;
+	position: relative;
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -36,7 +37,7 @@ const Container = styled.div`
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
-        div {
+        .imgBox {
             width: 250px;
             height: 250px;
             margin-bottom: 20px;
@@ -58,6 +59,7 @@ const Container = styled.div`
 			flex-wrap: wrap;
 			align-items: center;
 			justify-content: center;
+			margin-top: 150px;
 
 			p {
 				width: 500px;
@@ -88,7 +90,7 @@ const List = memo(() => {
             {data && Array.isArray(data.data) && data.data.length > 0 ? (
 				data.data.map((v, i) => {
 					return (
-						<div key={i}>
+						<div className="imgBox" key={i}>
 							<NavLink to={`/main/view/${v.id}`}>
 								<img src={v.file_path} alt="이미지" />
 							</NavLink>
@@ -97,7 +99,7 @@ const List = memo(() => {
 				})
 			) : (
 				<div className="error">
-					<p>데이터가 없습니다.</p>
+					<p>아직 자랑이 없습니다.</p>
 				</div>
 			)}
 			{data && data.pagenation && <Pagenation pagenation={data.pagenation} />}

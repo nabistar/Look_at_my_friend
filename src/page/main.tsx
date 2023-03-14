@@ -6,7 +6,6 @@ import { NavLink, Routes, Route } from "react-router-dom";
 import mq from "../MediaQuery";
 
 // img
-import back from "../assets/img/back.png";
 import pen from "../assets/img/pen.png";
 import list from "../assets/img/list.png";
 
@@ -18,7 +17,7 @@ import List from "./List";
 const Container = styled.div`
     width: 100%;
     height: 100%;
-    background: url(${back}) no-repeat center/cover;
+    background-color: #f2bd85;
 
     .box {
         width: 60%;

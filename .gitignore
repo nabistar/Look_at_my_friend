@@ -29,3 +29,4 @@ _files
 .env
 .env.*
 dist
+upload
