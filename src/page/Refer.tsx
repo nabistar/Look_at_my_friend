@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { NavLink, Routes, Route } from "react-router-dom";
 
 // img
-import back from "../assets/img/back.png";
 import pen from "../assets/img/pen.png";
 import list from "../assets/img/list.png";
 
@@ -13,7 +12,7 @@ import mq from '../MediaQuery';
 const Container = styled.div`
     width: 100%;
     height: 100%;
-    background: url(${back}) no-repeat center/cover;
+    background-color: #f2bd85;
     display: flex;
     align-items: center;
 

@@ -16,19 +16,33 @@ interface customReq extends Request {
     files?: Object;
 }
 
+interface data {
+    id: string | number;
+    file_path: string;
+}
+
 const url: string = "/lookfriend";
 const router = express.Router();
 
 schedule.scheduleJob("0 0 * * *", async () => {
-	try {
-		let json = await LetterService.getAll();
-	} catch (err) {
-		return err;
-	}
-});
-
-fs.readdir("./_files/img", (err, files) => {
-	console.log(files);
+    try {
+        let json = await LetterService.getAll();
+        let img = json.map((v: data, i: number) => v.file_path);
+        fs.readdir("./_files/img", (err, files) => {
+            const deleteImg = files.filter((x: string) => !img.includes(x));
+            if (deleteImg.length > 0) {
+                deleteImg.forEach((v: string, i: number) => {
+                    fs.unlink(`./_files/img/${v}`, (err) => {
+                        if (err) {
+                            throw err;
+                        }
+                    });
+                });
+            }
+        });
+    } catch (err) {
+        return err;
+    }
 });
 
 router.get(url, async (req, res: custom, next) => {
@@ -81,7 +95,7 @@ router.post(url, async (req, res: custom, next) => {
             content: content,
             password: password,
         };
-		
+
         json = await LetterService.addItem(params);
     } catch (err) {
         return next(err);
@@ -112,10 +126,12 @@ router.delete(`${url}/:id`, async (req, res: custom, next) => {
     const { id } = req.params;
 
     try {
-		let json = await LetterService.getItem(id);
-		fs.unlink(json.file_path , err => {
-			return next(err);
-		});
+        let json = await LetterService.getItem(id);
+        fs.unlink(`./_files${json.file_path}`, (err) => {
+            if(err) {
+				return next(err);
+			}
+        });
         await LetterService.deleteItem(id);
     } catch (err) {
         return next(err);
