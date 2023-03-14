@@ -187,12 +187,12 @@ const write = memo(() => {
 
 		if(file && file.data) {
 			const img = file.data.url;
-			dispatch(PostItem({file: img, content: content, password: password})).then((result) => {
+			dispatch(PostItem({file_path: img, content: content, password: password})).then((result) => {
 				const view = result.payload;
 				if(view instanceof Error) {
 					window.alert("에러가 발생했습니다.");
 				} else {
-					if(typeof view !== 'undefined') {
+					if(typeof view !== 'undefined' && !Array.isArray(view.data)) {
 						navigate(`/main/view/${view.data.id}`);
 					}
 				}

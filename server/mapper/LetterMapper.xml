@@ -3,7 +3,7 @@
 
 <mapper namespace="LetterMapper">
 	<select id="selectList">
-		SELECT file_path FROM letter
+		SELECT id, file_path FROM letter
 
 		ORDER BY id DESC
 		<if test="listCount != 0">

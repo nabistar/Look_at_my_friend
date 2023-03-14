@@ -20,6 +20,30 @@ class LetterService {
 		]);
 	}
 
+	async getAll() {
+		let dbcon = null;
+		let data = null;
+
+		try {
+            dbcon = await DBPool.getConnection();
+            let sql = mybatisMapper.getStatement(
+                "LetterMapper",
+                "selectList"
+            );
+            let [result] = await dbcon.query(sql);
+
+            data = result;
+        } catch (err) {
+            throw err;
+        } finally {
+            if (dbcon) {
+                dbcon.release();
+            }
+        }
+
+        return data;
+	}
+
 	async getList(params: page) {
 		let dbcon = null;
 		let data = null;
