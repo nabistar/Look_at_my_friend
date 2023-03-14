@@ -1,4 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
+import fs from "fs";
+import schedule from "node-schedule";
 import LetterService from "../service/LetterService";
 import UtilHelper from "../helper/UtillHelper";
 import fileHelper from "../helper/FileHelper";
@@ -16,6 +18,18 @@ interface customReq extends Request {
 
 const url: string = "/lookfriend";
 const router = express.Router();
+
+schedule.scheduleJob("0 0 * * *", async () => {
+	try {
+		let json = await LetterService.getAll();
+	} catch (err) {
+		return err;
+	}
+});
+
+fs.readdir("./_files/img", (err, files) => {
+	console.log(files);
+});
 
 router.get(url, async (req, res: custom, next) => {
     const { nowpage = 1, listCount = 10 } = req.query;
@@ -51,11 +65,11 @@ router.get(`${url}/:id`, async (req, res: custom, next) => {
 });
 
 router.post(url, async (req, res: custom, next) => {
-    const { file, content, password } = req.body;
+    const { file_path, content, password } = req.body;
     let json = null;
 
     try {
-        regexHelper.value(file, "등록할 파일이 없습니다.");
+        regexHelper.value(file_path, "등록할 파일이 없습니다.");
         regexHelper.value(password, "비밀번호가 없습니다.");
     } catch (err) {
         return next(err);
@@ -63,7 +77,7 @@ router.post(url, async (req, res: custom, next) => {
 
     try {
         const params = {
-            file_path: file,
+            file_path: file_path,
             content: content,
             password: password,
         };
@@ -98,6 +112,10 @@ router.delete(`${url}/:id`, async (req, res: custom, next) => {
     const { id } = req.params;
 
     try {
+		let json = await LetterService.getItem(id);
+		fs.unlink(json.file_path , err => {
+			return next(err);
+		});
         await LetterService.deleteItem(id);
     } catch (err) {
         return next(err);

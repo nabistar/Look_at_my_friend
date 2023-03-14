@@ -16,7 +16,8 @@ interface id {
 }
 
 interface info {
-    data: { [key: string]: string };
+    data: data | data[];
+	pagenation?: {[key: string]: number};
     pubdate: string;
     rt: string;
     rtcode: number;
@@ -31,8 +32,9 @@ interface file {
     rtmsg: string | null;
 }
 
-interface addimg {
-    file: string;
+interface data {
+	id?: string | number;
+    file_path: string;
     content: string | null;
     password: string;
 }
@@ -44,7 +46,7 @@ interface initialState {
     error: ErrorClass | null;
 }
 
-export const getList = createAsyncThunk<info, info, { rejectValue: ErrorClass }>("FileSlice/getList", async (payload, { rejectWithValue }) => {
+export const getList = createAsyncThunk<info, null, { rejectValue: ErrorClass }>("FileSlice/getList", async (payload, { rejectWithValue }) => {
     let result = null;
 
     try {
@@ -74,7 +76,7 @@ export const getItem = createAsyncThunk<info, id, { rejectValue: ErrorClass }>("
     return result;
 });
 
-export const PostItem = createAsyncThunk<info, addimg, { rejectValue: ErrorClass }>("FileSlice/PostItem", async (payload, { rejectWithValue }) => {
+export const PostItem = createAsyncThunk<info, data, { rejectValue: ErrorClass }>("FileSlice/PostItem", async (payload, { rejectWithValue }) => {
     let result = null;
 
     try {
@@ -140,6 +142,7 @@ const FileSlice = createSlice({
             .addCase(getList.fulfilled, (state, { payload }) => {
                 state.loading = false;
                 state.data = payload;
+				state.file = null;
             })
             .addCase(getList.rejected, (state, { payload }) => {
                 state.loading = false;
@@ -153,6 +156,7 @@ const FileSlice = createSlice({
             .addCase(getItem.fulfilled, (state, { payload }) => {
                 state.loading = false;
                 state.data = payload;
+				state.file = null;
             })
             .addCase(getItem.rejected, (state, { payload }) => {
                 state.loading = false;
@@ -166,6 +170,7 @@ const FileSlice = createSlice({
             .addCase(PostItem.fulfilled, (state, { payload }) => {
                 state.loading = false;
                 state.data = payload;
+				state.file = null;
             })
             .addCase(PostItem.rejected, (state, { payload }) => {
                 state.loading = false;
