@@ -15,6 +15,10 @@ interface id {
 	id: string | number
 }
 
+interface page {
+	nowpage?: number
+}
+
 interface info {
     data: data | data[];
 	pagenation?: {[key: string]: number};
@@ -46,11 +50,13 @@ interface initialState {
     error: ErrorClass | null;
 }
 
-export const getList = createAsyncThunk<info, null, { rejectValue: ErrorClass }>("FileSlice/getList", async (payload, { rejectWithValue }) => {
+export const getList = createAsyncThunk<info, page, { rejectValue: ErrorClass }>("FileSlice/getList", async (payload, { rejectWithValue }) => {
     let result = null;
 
     try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get(API_URL, {
+			params: payload
+		});
         result = response.data;
     } catch (err) {
         if (err instanceof ErrorClass) {

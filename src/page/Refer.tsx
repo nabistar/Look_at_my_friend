@@ -30,8 +30,10 @@ const Container = styled.div`
 			width: 100%;
 			margin-bottom: 100px;
 			p {
-				width: 100%;
+				width: 80%;
+				margin: auto;
 				text-align: center;
+				word-break: keep-all;
 
 				&:first-child {
 					font-size: 50px;

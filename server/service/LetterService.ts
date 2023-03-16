@@ -28,7 +28,8 @@ class LetterService {
             dbcon = await DBPool.getConnection();
             let sql = mybatisMapper.getStatement(
                 "LetterMapper",
-                "selectList"
+                "selectList",
+				{offset: 0, listCount: 0}
             );
             let [result] = await dbcon.query(sql);
 

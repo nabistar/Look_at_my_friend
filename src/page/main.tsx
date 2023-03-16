@@ -8,6 +8,7 @@ import mq from "../MediaQuery";
 // img
 import pen from "../assets/img/pen.png";
 import list from "../assets/img/list.png";
+import home from "../assets/img/home.png";
 
 // page
 import View from "./view";
@@ -28,25 +29,33 @@ const Container = styled.div`
         text-align: right;
 
         nav {
-			width: 200px;
-			margin: 0 auto 20px;
+			width: 350px;
+			margin: 0 auto 80px;
 			display: flex;
 			justify-content: space-between;
             a {
                 display: block;
                 width: 80px;
                 height: 80px;
+				text-decoration: none;
 
                 img {
                     width: 100%;
                     height: 100%;
                 }
+
+				p {
+					text-align: center;
+					color: #000;
+					margin-top: 5px;
+					font-size: 12px;
+				}
             }
         }
 
 		.img {
 			width: 100%;
-			height: 90%;
+			height: calc(100% - 160px);
 		}
     }
 
@@ -63,11 +72,17 @@ const main = memo(() => {
         <Container>
             <div className="box">
                 <nav>
+					<NavLink to="/">
+                        <img src={home} alt="home img" />
+						<p>처음으로</p>
+                    </NavLink>
                     <NavLink to="list">
                         <img src={list} alt="list img" />
+						<p>목록으로</p>
                     </NavLink>
                     <NavLink to="write">
                         <img src={pen} alt="pen img" />
+						<p>작성하기</p>
                     </NavLink>
                 </nav>
                 <div className="img">

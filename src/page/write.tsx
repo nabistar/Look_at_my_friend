@@ -136,6 +136,7 @@ const Container = styled.div`
 				.content {
 					width: 100%;
 					margin-top: 20px;
+					margin-bottom: 20px;
 				}
 
 				button {
@@ -189,10 +190,12 @@ const write = memo(() => {
 			const img = file.data.url;
 			dispatch(PostItem({file_path: img, content: content, password: password})).then((result) => {
 				const view = result.payload;
+				
 				if(view instanceof Error) {
 					window.alert("에러가 발생했습니다.");
 				} else {
 					if(typeof view !== 'undefined' && !Array.isArray(view.data)) {
+						window.alert("글이 작성되었습니다.");
 						navigate(`/main/view/${view.data.id}`);
 					}
 				}
@@ -213,7 +216,7 @@ const write = memo(() => {
                     <div className="view">{file && <img src={file.data.url} alt="img" />}</div>
                 </div>
                 <div className="content">
-                    <textarea name="content"></textarea>
+                    <textarea name="content" placeholder="자랑 글을 입력해주세요. 최대 5000자까지 작성 가능합니다." maxLength={5000}></textarea>
                 </div>
 				<div className="password">
 					<input type='text' name='password' placeholder="비밀번호를 입력해주세요." required/>

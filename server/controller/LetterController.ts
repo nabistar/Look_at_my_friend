@@ -49,9 +49,9 @@ router.get(url, async (req, res: custom, next) => {
     const { nowpage = 1, listCount = 10 } = req.query;
     let pageInfo = null;
     let json = null;
-
+	console.log(nowpage);
     try {
-        const totalCount = LetterService.getCount();
+        const totalCount = await LetterService.getCount();
         pageInfo = UtilHelper.pagenation(totalCount, nowpage, listCount);
         json = await LetterService.getList({ offset: pageInfo.offset, listCount: pageInfo.listCount });
     } catch (err) {

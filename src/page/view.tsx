@@ -51,8 +51,6 @@ const Container = styled.div`
             width: 49%;
             height: 500px;
             background-color: rgba(255, 255, 255, 0.5);
-            padding: 20px;
-            box-sizing: border-box;
             overflow-y: auto;
 
             &::-webkit-scrollbar {
@@ -67,8 +65,16 @@ const Container = styled.div`
                 background-color: #ff8800;
             }
 
-            p {
+            textarea {
                 text-align: left;
+                width: 100%;
+                height: 498px;
+                box-sizing: border-box;
+                resize: none;
+                outline: none;
+                border: none;
+                padding: 10px;
+                font-size: 15px;
             }
         }
 
@@ -134,6 +140,10 @@ const Container = styled.div`
 
 				.content {
 					height: 400px;
+
+					textarea {
+						height: 398px;
+					}
 				}
 			}
 		`}
@@ -174,7 +184,11 @@ const view = memo(() => {
                         <img src={data.data.file_path} alt="img" />
                     </div>
                     <div className="content">
-                        <p>{data.data.content}</p>
+                        {data.data.content ? (
+							<textarea value={data.data.content} readOnly></textarea>
+						) : (
+							<textarea readOnly></textarea>
+						)}
                     </div>
                     <div className="delete">
                         <button type="button" onClick={deleteBtn}>삭제하기</button>

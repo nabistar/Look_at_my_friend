@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 // 슬라이스
 import { getList } from "../Slice/FileSlice";
@@ -18,7 +18,7 @@ const Container = styled.div`
     width: 100%;
     height: 100%;
 	overflow-y: auto;
-	position: relative;
+	
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -37,6 +37,7 @@ const Container = styled.div`
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
+		position: relative;
         .imgBox {
             width: 250px;
             height: 250px;
@@ -78,10 +79,17 @@ const List = memo(() => {
 
 	const dispatch = useAppDispatch();
 	const {data, loading} = useAppSelector((state) => state.FileSlice);
+	const {search} = useLocation();
+	const params = new URLSearchParams(search);
+	const nowpage= Object.fromEntries(params).page;
 
 	useEffect(() => {
-		dispatch(getList(null));
-	}, []);
+		if(nowpage) {
+			dispatch(getList({nowpage: parseInt(nowpage)}));
+		} else {
+			dispatch(getList({nowpage: 1}));
+		}
+	}, [nowpage]);
 
     return (
         <Container>
