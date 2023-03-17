@@ -8,6 +8,9 @@ import { getList } from "../Slice/FileSlice";
 // 커스텀 훅
 import { useAppDispatch, useAppSelector } from "../Hook";
 
+// 미디어쿼리
+import mq from "../MediaQuery";
+
 // 로딩바
 import Spinner from "../Spinner";
 
@@ -39,8 +42,8 @@ const Container = styled.div`
         justify-content: space-evenly;
 		position: relative;
         .imgBox {
-            width: 250px;
-            height: 250px;
+            width: 23%;
+            height: 200px;
             margin-bottom: 20px;
             a {
                 display: block;
@@ -60,7 +63,6 @@ const Container = styled.div`
 			flex-wrap: wrap;
 			align-items: center;
 			justify-content: center;
-			margin-top: 150px;
 
 			p {
 				width: 500px;
@@ -73,6 +75,23 @@ const Container = styled.div`
 			}
 		}
     }
+
+	${mq.maxWidth('lg')`
+		.list {
+			.imgBox {
+				height: 150px;
+			}
+		}
+	`}
+
+	${mq.maxWidth('sm')`
+			.list {
+				.imgBox {
+					width: 47%;
+					height: 180px;
+				}
+			}
+		`}
 `;
 
 const List = memo(() => {

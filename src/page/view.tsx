@@ -84,6 +84,7 @@ const Container = styled.div`
                 height: 50px;
                 border: none;
                 outline: none;
+				margin-top: 50px;
 
                 &:hover {
                     background-color: #ff8800;
@@ -120,12 +121,6 @@ const Container = styled.div`
 				.content {
 					width: 100%;
 					margin-top: 20px;
-				}
-
-				.delete {
-					button {
-						margin-top: 20px;
-					}
 				}
 			}
 		`}

@@ -12,7 +12,7 @@ import mq from '../MediaQuery';
 const Container = styled.div`
     width: 100%;
     height: 100%;
-    background-color: #f2bd85;
+    background-color: #F0E8D1;
     display: flex;
     align-items: center;
 
@@ -116,7 +116,7 @@ const Refer = memo(() => {
                     </NavLink>
                     <NavLink to="/main/write">
                         <img src={pen} alt="pen img" />
-						<p>글 작성</p>
+						<p>작성하기</p>
                     </NavLink>
                 </div>
             </div>

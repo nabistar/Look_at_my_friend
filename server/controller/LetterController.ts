@@ -29,7 +29,7 @@ schedule.scheduleJob("0 0 * * *", async () => {
         let json = await LetterService.getAll();
         let img = json.map((v: data, i: number) => v.file_path);
         fs.readdir("./_files/img", (err, files) => {
-            const deleteImg = files.filter((x: string) => !img.includes(x));
+            const deleteImg = files.filter((x: string) => !img.includes(`/img/${x}`));
             if (deleteImg.length > 0) {
                 deleteImg.forEach((v: string, i: number) => {
                     fs.unlink(`./_files/img/${v}`, (err) => {
@@ -46,7 +46,7 @@ schedule.scheduleJob("0 0 * * *", async () => {
 });
 
 router.get(url, async (req, res: custom, next) => {
-    const { nowpage = 1, listCount = 10 } = req.query;
+    const { nowpage = 1, listCount = 12 } = req.query;
     let pageInfo = null;
     let json = null;
 	console.log(nowpage);

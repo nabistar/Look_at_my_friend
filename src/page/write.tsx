@@ -58,6 +58,11 @@ const Container = styled.div`
                     width: 80px;
                     height: 80px;
                 }
+
+				p {
+					text-align: center;
+					font-size: 12px;
+				}
             }
         }
 
@@ -96,6 +101,7 @@ const Container = styled.div`
 		.password {
 			width: 100%;
 			text-align: center;
+			margin-top: 20px;
 
 			input {
 				width: 200px;
@@ -116,6 +122,7 @@ const Container = styled.div`
 			height: 50px;
 			border: none;
 			outline: none;
+			margin-top: 30px;
 
 			&:hover {
 				background-color: #ff8800;
@@ -139,9 +146,14 @@ const Container = styled.div`
 					margin-bottom: 20px;
 				}
 
-				button {
-					margin-top: 20px;
+				.password {
+					margin-top: 0px;
 				}
+
+				button {
+					margin-top: 50px;
+				}
+
 			}
 		`}
 
@@ -196,7 +208,7 @@ const write = memo(() => {
 				} else {
 					if(typeof view !== 'undefined' && !Array.isArray(view.data)) {
 						window.alert("글이 작성되었습니다.");
-						navigate(`/main/view/${view.data.id}`);
+						navigate('/main/list');
 					}
 				}
 			});
@@ -212,6 +224,7 @@ const write = memo(() => {
                     <input type="file" id="file" name="file" onChange={addImg} />
                     <label htmlFor="file">
                         <img src={picture} alt="img" />
+						<p>사진 올리기</p>
                     </label>
                     <div className="view">{file && <img src={file.data.url} alt="img" />}</div>
                 </div>

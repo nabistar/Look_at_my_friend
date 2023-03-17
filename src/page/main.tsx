@@ -18,7 +18,7 @@ import List from "./List";
 const Container = styled.div`
     width: 100%;
     height: 100%;
-    background-color: #f2bd85;
+    background-color: #F0E8D1;
 
     .box {
         width: 60%;
@@ -30,7 +30,7 @@ const Container = styled.div`
 
         nav {
 			width: 350px;
-			margin: 0 auto 80px;
+			margin: 30px auto 80px;
 			display: flex;
 			justify-content: space-between;
             a {
@@ -55,13 +55,19 @@ const Container = styled.div`
 
 		.img {
 			width: 100%;
-			height: calc(100% - 160px);
+			height: calc(100% - 190px);
 		}
     }
 
+	${mq.maxWidth('lg')`
+		.box {
+			width: 85%;
+		}
+	`}
+
 	${mq.maxWidth('sm')`
 		.box {
-			width: 75%;
+			width: 90%;
 		}
 	`}
 
