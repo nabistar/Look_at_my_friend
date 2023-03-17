@@ -40,18 +40,34 @@ const Container = styled.div`
         }
 
         .contentImg {
-            width: 49%;
+            width: 48%;
+            position: relative;
+            &::after {
+                display: block;
+                content: "";
+                padding-bottom: 100%;
+            }
             img {
                 width: 100%;
-                height: 500px;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
             }
         }
 
         .content {
-            width: 49%;
-            height: 500px;
+            width: 48%;
+            position: relative;
             background-color: rgba(255, 255, 255, 0.5);
             overflow-y: auto;
+            vertical-align: middle;
+
+            &::after {
+                display: block;
+                content: "";
+                padding-bottom: 100%;
+            }
 
             &::-webkit-scrollbar {
                 width: 10px;
@@ -68,13 +84,17 @@ const Container = styled.div`
             textarea {
                 text-align: left;
                 width: 100%;
-                height: 498px;
+                height: 100%;
                 box-sizing: border-box;
                 resize: none;
                 outline: none;
                 border: none;
                 padding: 10px;
                 font-size: 15px;
+                background-color: transparent;
+                position: absolute;
+                top: 0;
+                left: 0;
             }
         }
 
@@ -84,7 +104,7 @@ const Container = styled.div`
                 height: 50px;
                 border: none;
                 outline: none;
-				margin-top: 50px;
+                margin-top: 50px;
 
                 &:hover {
                     background-color: #ff8800;
@@ -93,33 +113,35 @@ const Container = styled.div`
         }
     }
 
-	.error {
-		width: 100%;
+    .error {
+        width: 100%;
         height: 100%;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-		justify-content: center;
+        justify-content: center;
 
-		p {
-			width: 500px;
-			height: 400px;
-			text-align: center;
-			font-weight: bold;
-			background-color: rgba(255, 255, 255, 0.7);
-			padding-top: 190px;
-			box-sizing: border-box;
-		}
-	}
+        p {
+            width: 500px;
+            height: 400px;
+            text-align: center;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding-top: 190px;
+            box-sizing: border-box;
+        }
+    }
 
     ${mq.maxWidth("lg")`
 			.contentBox {
+				width: 90%;
+				margin: auto;
 				.contentImg {
-					width: 100%;
+					width: 90%;
 				}
 
 				.content {
-					width: 100%;
+					width: 90%;
 					margin-top: 20px;
 				}
 			}
@@ -127,18 +149,15 @@ const Container = styled.div`
 
     ${mq.maxWidth("sm")`
 			.contentBox {
+				width: 100%;
+				margin: auto;
 				.contentImg {
-					img {
-						height: 400px;
-					}
+					width: 90%;
 				}
 
 				.content {
-					height: 400px;
-
-					textarea {
-						height: 398px;
-					}
+					width: 90%;
+					margin-top: 20px;
 				}
 			}
 		`}
@@ -147,7 +166,7 @@ const Container = styled.div`
 const view = memo(() => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
-	const navigate = useNavigate();
+    const navigate = useNavigate();
     const { data, loading } = useAppSelector((state) => state.FileSlice);
 
     useEffect(() => {
@@ -156,19 +175,22 @@ const view = memo(() => {
         }
     }, []);
 
-    const deleteBtn = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		e.preventDefault();
-		const password = window.prompt('비밀번호를 입력해주세요.', "");
-		if (data && !Array.isArray(data.data) && data.data.id && password == data.data.password) {
-			if(window.confirm("정말 삭제하시겠습니까?")) {
-				dispatch(DeleteItem({id: data.data.id})).then((result) => {
-					navigate("/main/list");
-				});
-			}
-		} else {
-			window.alert("비밀번호가 틀렸습니다.");
-		}
-	}, [data]);
+    const deleteBtn = useCallback(
+        (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            e.preventDefault();
+            const password = window.prompt("비밀번호를 입력해주세요.", "");
+            if (data && !Array.isArray(data.data) && data.data.id && password == data.data.password) {
+                if (window.confirm("정말 삭제하시겠습니까?")) {
+                    dispatch(DeleteItem({ id: data.data.id })).then((result) => {
+                        navigate("/main/list");
+                    });
+                }
+            } else {
+                window.alert("비밀번호가 틀렸습니다.");
+            }
+        },
+        [data],
+    );
 
     return (
         <Container>
@@ -179,20 +201,18 @@ const view = memo(() => {
                         <img src={data.data.file_path} alt="img" />
                     </div>
                     <div className="content">
-                        {data.data.content ? (
-							<textarea value={data.data.content} readOnly></textarea>
-						) : (
-							<textarea readOnly></textarea>
-						)}
+                        {data.data.content ? <textarea value={data.data.content} readOnly></textarea> : <textarea readOnly></textarea>}
                     </div>
                     <div className="delete">
-                        <button type="button" onClick={deleteBtn}>삭제하기</button>
+                        <button type="button" onClick={deleteBtn}>
+                            삭제하기
+                        </button>
                     </div>
                 </div>
             ) : (
                 <div className="error">
-					<p>데이터가 없습니다.</p>
-				</div>
+                    <p>데이터가 없습니다.</p>
+                </div>
             )}
         </Container>
     );

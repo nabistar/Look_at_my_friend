@@ -68,8 +68,29 @@ const Container = styled.div`
 	${mq.maxWidth('sm')`
 		.box {
 			width: 90%;
+
+			nav {
+				width: 300px;
+				a {
+					width: 70px;
+					height: 70px;
+				}
+			}
 		}
 	`}
+
+	${mq.maxWidth('ph')`
+			.box {
+
+				nav {
+					width: 270px;
+					a {
+						width: 60px;
+						height: 60px;
+					}
+				}
+			}
+		`}
 
 `;
 

@@ -40,9 +40,27 @@ const Container = styled.div`
         }
         .contentImg {
             width: 45%;
-            img {
+			display: flex;
+			flex-wrap: wrap; 
+
+            .view {
                 width: 100%;
-                height: 500px;
+                position: relative;
+				background-color: rgba(255, 255, 255, 0.5);
+
+                &::after {
+                    display: block;
+                    content: "";
+                    padding-bottom: 100%;
+                }
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                }
             }
 
             input {
@@ -50,28 +68,35 @@ const Container = styled.div`
             }
 
             label {
-				width: 80px;
-				height: 80px;
-				display: block;
-				margin: auto;
+                width: 75px;
+                height: 75px;
+                display: block;
+				text-align: center;
                 img {
-                    width: 80px;
-                    height: 80px;
+                    width: 60px;
+                    height: 60px;
+                    position: static;
                 }
 
-				p {
-					text-align: center;
-					font-size: 12px;
-				}
+                p {
+                    text-align: center;
+                    font-size: 12px;
+                }
             }
         }
 
         .content {
-            width: 49%;
-            height: 500px;
+            width: 45%;
             background-color: rgba(255, 255, 255, 0.5);
             overflow-y: auto;
-            margin-top: 80px;
+            margin-top: 75px;
+            position: relative;
+
+            &::after {
+                display: block;
+                content: "";
+                padding-bottom: 100%;
+            }
 
             &::-webkit-scrollbar {
                 width: 10px;
@@ -88,62 +113,64 @@ const Container = styled.div`
             textarea {
                 text-align: left;
                 width: 100%;
-                height: 498px;
+                height: 100%;
                 box-sizing: border-box;
                 resize: none;
                 outline: none;
                 border: none;
                 padding: 10px;
                 font-size: 15px;
+                position: absolute;
+                top: 0;
+                left: 0;
             }
         }
 
-		.password {
-			width: 100%;
-			text-align: center;
-			margin-top: 20px;
+        .password {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
 
-			input {
-				width: 200px;
-				height: 30px;
-				border: none;
-				outline: none;
-				margin-bottom: 20px;
-			}
+            input {
+                width: 200px;
+                height: 30px;
+                border: none;
+                outline: none;
+                margin-bottom: 20px;
+            }
 
-			p {
-				font-size: 12px;
-				font-weight: bold;
-			}
-		}
+            p {
+                font-size: 12px;
+                font-weight: bold;
+            }
+        }
 
-		button {
-			width: 100px;
-			height: 50px;
-			border: none;
-			outline: none;
-			margin-top: 30px;
+        button {
+            width: 100px;
+            height: 50px;
+            border: none;
+            outline: none;
+            margin-top: 30px;
 
-			&:hover {
-				background-color: #ff8800;
-			}
-		}
+            &:hover {
+                background-color: #ff8800;
+            }
+        }
     }
 
     ${mq.maxWidth("lg")`
 			form {
-					.contentImg {
-					width: 100%;
+				width: 90%;
+				margin: auto;
+				.contentImg {
+					margin: auto;
+					width: 90%;
 
-					img {
-						height: 500px;
-					}
 				}
 
 				.content {
-					width: 100%;
-					margin-top: 20px;
-					margin-bottom: 20px;
+					width: 90%;
+					margin: 20px auto 20px;
 				}
 
 				.password {
@@ -159,18 +186,7 @@ const Container = styled.div`
 
     ${mq.maxWidth("sm")`
 			form {
-					.contentImg {
-					img {
-						height: 340px;
-					}
-				}
-
-				.content {
-					height: 400px;
-					textarea {
-						height: 398px;
-					}
-				}
+				width: 100%;
 			}
 		`}
 `;
@@ -178,7 +194,7 @@ const Container = styled.div`
 const write = memo(() => {
     const dispatch = useAppDispatch();
     const { file } = useAppSelector((state) => state.FileSlice);
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const addImg = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const file = e.currentTarget.files;
@@ -189,33 +205,36 @@ const write = memo(() => {
         dispatch(PostImg(formData));
     }, []);
 
-	const addLetter = useCallback((e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		const current = e.currentTarget;
-		const content: string = current.content.value;
-		const password: string = current.password.value;
-		if(!password) {
-			window.alert("비밀번호를 입력해주세요.");
-		}
+    const addLetter = useCallback(
+        (e: FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            const current = e.currentTarget;
+            const content: string = current.content.value;
+            const password: string = current.password.value;
+            if (!password) {
+                window.alert("비밀번호를 입력해주세요.");
+            }
 
-		if(file && file.data) {
-			const img = file.data.url;
-			dispatch(PostItem({file_path: img, content: content, password: password})).then((result) => {
-				const view = result.payload;
-				
-				if(view instanceof Error) {
-					window.alert("에러가 발생했습니다.");
-				} else {
-					if(typeof view !== 'undefined' && !Array.isArray(view.data)) {
-						window.alert("글이 작성되었습니다.");
-						navigate('/main/list');
-					}
-				}
-			});
-		} else {
-			window.alert("이미지를 추가해주세요.");
-		}
-	}, [file]);
+            if (file && file.data) {
+                const img = file.data.url;
+                dispatch(PostItem({ file_path: img, content: content, password: password })).then((result) => {
+                    const view = result.payload;
+
+                    if (view instanceof Error) {
+                        window.alert("에러가 발생했습니다.");
+                    } else {
+                        if (typeof view !== "undefined" && !Array.isArray(view.data)) {
+                            window.alert("글이 작성되었습니다.");
+                            navigate("/main/list");
+                        }
+                    }
+                });
+            } else {
+                window.alert("이미지를 추가해주세요.");
+            }
+        },
+        [file],
+    );
 
     return (
         <Container>
@@ -224,17 +243,17 @@ const write = memo(() => {
                     <input type="file" id="file" name="file" onChange={addImg} />
                     <label htmlFor="file">
                         <img src={picture} alt="img" />
-						<p>사진 올리기</p>
+                        <p>사진 올리기</p>
                     </label>
                     <div className="view">{file && <img src={file.data.url} alt="img" />}</div>
                 </div>
                 <div className="content">
                     <textarea name="content" placeholder="자랑 글을 입력해주세요. 최대 5000자까지 작성 가능합니다." maxLength={5000}></textarea>
                 </div>
-				<div className="password">
-					<input type='text' name='password' placeholder="비밀번호를 입력해주세요." required/>
-					<p>적어주신 비밀번호는 게시글 삭제 시 이용됩니다.</p>
-				</div>
+                <div className="password">
+                    <input type="text" name="password" placeholder="비밀번호를 입력해주세요." required />
+                    <p>적어주신 비밀번호는 게시글 삭제 시 이용됩니다.</p>
+                </div>
                 <button type="submit">자랑하기</button>
             </form>
         </Container>

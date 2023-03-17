@@ -38,16 +38,13 @@ const Container = styled.div`
 				&:first-child {
 					font-size: 50px;
 					font-weight: bold;
-					color: #ff0000;
-					margin-bottom: 20px;
-
-					span {
-						color: #ff8800;
-					}
+					color: #ff8800;
+					margin-bottom: 100px;
 				}
 
-				&:last-child {
-					font-size: 15px;
+				&:not(&:first-child) {
+					font-size: 14px;
+					margin-bottom: 20px;
 				}
 			}
 		}
@@ -75,13 +72,10 @@ const Container = styled.div`
 					font-size: 12px;
 					color: #000;
 					text-align: center;
+					margin-top: 10px;
 				}
 
-				&:last-child {
-					p {
-						margin-left: 8px;
-					}
-				}
+				
             }
         }
 
@@ -89,12 +83,37 @@ const Container = styled.div`
 			.content {
 				p {
 					&:first-child {
+						width: 90%;
 						font-size: 40px;
 					}
 
-					&:last-child {
-						font-size: 10px;
+					&:not(&:first-child) {
+						font-size: 12px;
 					}
+				}
+			}
+		`}
+
+	${mq.maxWidth('ph')`
+			.content {
+				margin-bottom: 50px;
+				p {
+					&:first-child {
+						font-size: 30px;
+						margin-bottom: 50px;
+					}
+
+					&:not(&:first-child) {
+						margin-bottom: 10px;
+					}
+
+				}
+			}
+
+			.button {
+				a {
+					width: 60px;
+					height: 60px;
 				}
 			}
 		`}
@@ -106,8 +125,11 @@ const Refer = memo(() => {
         <Container>
             <div className="refer">
                 <div className="content">
-                    <p>내 <span>친구</span>를 봐줘!</p>
-                    <p>개인 작품으로 만든 웹 사이트입니다. 불안정한 부분이 있을 수 있습니다. 업로드 된 사진은 게시물이 삭제되는 즉시 서버에서 삭제합니다.</p>
+                    <p>내 친구를 봐줘!</p>
+					<p>사진을 올리고 자랑하는 글을 쓸 수 있는 웹 사이트입니다.</p>
+                    <p>개인 작품으로 만든 웹 사이트입니다. 불안정한 부분이 있을 수 있습니다.</p>
+					<p>업로드 된 사진은 게시물이 삭제되는 즉시 서버에서 삭제합니다.</p>
+					<p>부적절한 사진 및 글이 포함된 게시글은 통보 없이 삭제될 수 있습니다.</p>
                 </div>
                 <div className="button">
                     <NavLink to="/main/list">
