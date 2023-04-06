@@ -8,9 +8,12 @@ import { getList } from "../Slice/FileSlice";
 // 커스텀 훅
 import { useAppDispatch, useAppSelector } from "../Hook";
 
+<<<<<<< HEAD
 // 미디어쿼리
 import mq from "../MediaQuery";
 
+=======
+>>>>>>> 90415a3 ('list')
 // 로딩바
 import Spinner from "../Spinner";
 
@@ -66,6 +69,7 @@ const Container = styled.div`
             }
         }
 
+<<<<<<< HEAD
         .error {
             width: 100%;
             height: 100%;
@@ -84,6 +88,26 @@ const Container = styled.div`
                 box-sizing: border-box;
             }
         }
+=======
+			.error {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+
+			p {
+				width: 500px;
+				height: 400px;
+				text-align: center;
+				font-weight: bold;
+				background-color: rgba(255, 255, 255, 0.7);
+				padding-top: 190px;
+				box-sizing: border-box;
+			}
+		}
+>>>>>>> 90415a3 ('list')
     }
 
 	${mq.maxWidth("lg")`
@@ -103,6 +127,7 @@ const Container = styled.div`
 `;
 
 const List = memo(() => {
+<<<<<<< HEAD
     const dispatch = useAppDispatch();
     const { data, loading } = useAppSelector((state) => state.FileSlice);
     const { search } = useLocation();
@@ -138,6 +163,37 @@ const List = memo(() => {
                 )}
                 {data && data.pagenation && <Pagenation pagenation={data.pagenation} />}
             </div>
+=======
+
+	const dispatch = useAppDispatch();
+	const {data, loading} = useAppSelector((state) => state.FileSlice);
+
+	useEffect(() => {
+		dispatch(getList(null));
+	}, []);
+
+    return (
+        <Container>
+			<Spinner visible={loading} />
+			<div className="list">
+            {data && Array.isArray(data.data) && data.data.length > 0 ? (
+				data.data.map((v, i) => {
+					return (
+						<div key={i}>
+							<NavLink to={`/main/view/${v.id}`}>
+								<img src={v.file_path} alt="이미지" />
+							</NavLink>
+						</div>
+					);
+				})
+			) : (
+				<div className="error">
+					<p>데이터가 없습니다.</p>
+				</div>
+			)}
+			{data && data.pagenation && <Pagenation pagenation={data.pagenation} />}
+			</div>
+>>>>>>> 90415a3 ('list')
         </Container>
     );
 });

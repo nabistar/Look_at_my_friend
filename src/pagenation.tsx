@@ -5,12 +5,20 @@ import { Link, useLocation } from "react-router-dom";
 const Container = styled.div`
     list-style: none;
     padding: 0;
+<<<<<<< HEAD
     margin: auto;
+=======
+    margin: 20px auto;
+>>>>>>> 90415a3 ('list')
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
 	position: absolute;
+<<<<<<< HEAD
 	bottom: -50px;
+=======
+	bottom: 0;
+>>>>>>> 90415a3 ('list')
 
     .link {
         display: block;

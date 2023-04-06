@@ -50,7 +50,11 @@ interface initialState {
     error: ErrorClass | null;
 }
 
+<<<<<<< HEAD
 export const getList = createAsyncThunk<info, page, { rejectValue: ErrorClass }>("FileSlice/getList", async (payload, { rejectWithValue }) => {
+=======
+export const getList = createAsyncThunk<info, null, { rejectValue: ErrorClass }>("FileSlice/getList", async (payload, { rejectWithValue }) => {
+>>>>>>> 90415a3 ('list')
     let result = null;
 
     try {

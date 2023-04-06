@@ -175,6 +175,7 @@ const view = memo(() => {
         }
     }, []);
 
+<<<<<<< HEAD
     const deleteBtn = useCallback(
         (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             e.preventDefault();
@@ -191,6 +192,21 @@ const view = memo(() => {
         },
         [data],
     );
+=======
+    const deleteBtn = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		e.preventDefault();
+		const password = window.prompt('비밀번호를 입력해주세요.', "");
+		if (data && !Array.isArray(data.data) && data.data.id && password == data.data.password) {
+			if(window.confirm("정말 삭제하시겠습니까?")) {
+				dispatch(DeleteItem({id: data.data.id})).then((result) => {
+					navigate("/main/list");
+				});
+			}
+		} else {
+			window.alert("비밀번호가 틀렸습니다.");
+		}
+	}, [data]);
+>>>>>>> 90415a3 ('list')
 
     return (
         <Container>
