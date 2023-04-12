@@ -215,7 +215,6 @@ const write = memo(() => {
                 window.alert("비밀번호를 입력해주세요.");
             }
 
-<<<<<<< HEAD
             if (file && file.data) {
                 const img = file.data.url;
                 dispatch(PostItem({ file_path: img, content: content, password: password })).then((result) => {
@@ -236,24 +235,6 @@ const write = memo(() => {
         },
         [file],
     );
-=======
-		if(file && file.data) {
-			const img = file.data.url;
-			dispatch(PostItem({file_path: img, content: content, password: password})).then((result) => {
-				const view = result.payload;
-				if(view instanceof Error) {
-					window.alert("에러가 발생했습니다.");
-				} else {
-					if(typeof view !== 'undefined' && !Array.isArray(view.data)) {
-						navigate(`/main/view/${view.data.id}`);
-					}
-				}
-			});
-		} else {
-			window.alert("이미지를 추가해주세요.");
-		}
-	}, [file]);
->>>>>>> 90415a3 ('list')
 
     return (
         <Container>

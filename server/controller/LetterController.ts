@@ -25,7 +25,6 @@ const url: string = "/lookfriend";
 const router = express.Router();
 
 schedule.scheduleJob("0 0 * * *", async () => {
-<<<<<<< HEAD
     try {
         let json = await LetterService.getAll();
         let img = json.map((v: data, i: number) => v.file_path);
@@ -44,17 +43,6 @@ schedule.scheduleJob("0 0 * * *", async () => {
     } catch (err) {
         return err;
     }
-=======
-	try {
-		let json = await LetterService.getAll();
-	} catch (err) {
-		return err;
-	}
-});
-
-fs.readdir("./_files/img", (err, files) => {
-	console.log(files);
->>>>>>> 90415a3 ('list')
 });
 
 router.get(url, async (req, res: custom, next) => {
@@ -138,19 +126,12 @@ router.delete(`${url}/:id`, async (req, res: custom, next) => {
     const { id } = req.params;
 
     try {
-<<<<<<< HEAD
         let json = await LetterService.getItem(id);
         fs.unlink(`./_files${json.file_path}`, (err) => {
             if(err) {
 				return next(err);
 			}
         });
-=======
-		let json = await LetterService.getItem(id);
-		fs.unlink(json.file_path , err => {
-			return next(err);
-		});
->>>>>>> 90415a3 ('list')
         await LetterService.deleteItem(id);
     } catch (err) {
         return next(err);
