@@ -60,5 +60,5 @@ typescript, React, Node.js, mySQL을 사용했습니다.
 </div>
 <br />
 
-## 실제 웹 사이트 (~23.5.14)
+## 실제 웹 사이트 (~23.6.14)
 http://myfriend.cafe24app.com/
